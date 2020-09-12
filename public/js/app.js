@@ -1927,8 +1927,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1938,20 +1936,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.withCredentials = true;
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000/";
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      user: null
+      user: []
     };
   },
   methods: {
     logout: function logout() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/logout").then(function () {
+      axios.post("/api/logout").then(function () {
         _this.$router.push({
           name: "Home"
         });
@@ -1963,8 +1963,7 @@ axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhos
   mounted: function mounted() {
     var _this2 = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/user").then(function (res) {
-      console.log(res.data);
+    axios.get("/api/user").then(function (res) {
       _this2.user = res.data;
     });
   }
@@ -2070,12 +2069,14 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
-      axios.post("/api/login", this.form).then(function (res) {
-        _this.$router.push({
-          name: "Dashboard"
+      axios.get("/sanctum/csrf-cookie").then(function (response) {
+        axios.post("/api/login", _this.form).then(function (res) {
+          _this.$router.push({
+            name: "Dashboard"
+          });
+        })["catch"](function (error) {
+          _this.errors = error.response.data.errors;
         });
-      })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
       });
     }
   }
@@ -2168,7 +2169,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post("/api/register-account", this.form).then(function (res) {
-        console.log("saved");
+        _this.$router.push({
+          name: "login"
+        });
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
       });
@@ -37796,6 +37799,16 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
+    _c("h2", [_vm._v("User Information")]),
+    _vm._v(" "),
+    _c("p", [_vm._v("Name : " + _vm._s(_vm.user.name))]),
+    _vm._v(" "),
+    _c("p", [_vm._v("Email : " + _vm._s(_vm.user.email))]),
+    _vm._v(" "),
+    _c("p", [_vm._v("Created at : " + _vm._s(_vm.user.created_at))]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
     _c(
       "button",
       {
@@ -38121,7 +38134,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "exampleInputPassword1" } }, [
+          _c("label", { attrs: { for: "exampleInputPassword2" } }, [
             _vm._v("Confirm Password")
           ]),
           _vm._v(" "),
@@ -38135,7 +38148,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "password", id: "exampleInputPassword1" },
+            attrs: { type: "password", id: "exampleInputPassword2" },
             domProps: { value: _vm.form.password_confirmation },
             on: {
               input: function($event) {

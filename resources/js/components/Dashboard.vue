@@ -1,6 +1,11 @@
 <template>
     <div>
         <h1>Dashboard Page</h1>
+        <br />
+        <h2>User Information</h2>
+        <p>Name : {{ user.name }}</p>
+        <p>Email : {{ user.email }}</p>
+        <p>Created at : {{ user.created_at }}</p>
 
         <br />
         <button class="btn btn-warning" @click.prevent="logout">Logout</button>
@@ -8,14 +13,10 @@
 </template>
 
 <script>
-import axios from "axios";
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8000/";
-
 export default {
     data() {
         return {
-            user: null
+            user: []
         };
     },
     methods: {
@@ -32,7 +33,6 @@ export default {
     },
     mounted() {
         axios.get("/api/user").then(res => {
-            console.log(res.data);
             this.user = res.data;
         });
     }

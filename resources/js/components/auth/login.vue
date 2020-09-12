@@ -48,14 +48,16 @@ export default {
     computed: {},
     methods: {
         login() {
-            axios
-                .post("/api/login", this.form)
-                .then(res => {
-                    this.$router.push({ name: "Dashboard" });
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
+            axios.get("/sanctum/csrf-cookie").then(response => {
+                axios
+                    .post("/api/login", this.form)
+                    .then(res => {
+                        this.$router.push({ name: "Dashboard" });
+                    })
+                    .catch(error => {
+                        this.errors = error.response.data.errors;
+                    });
+            });
         }
     }
 };

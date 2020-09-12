@@ -40,11 +40,11 @@
                 }}</small>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Confirm Password</label>
+                <label for="exampleInputPassword2">Confirm Password</label>
                 <input
                     type="password"
                     class="form-control"
-                    id="exampleInputPassword1"
+                    id="exampleInputPassword2"
                     v-model="form.password_confirmation"
                 />
             </div>
@@ -75,7 +75,7 @@ export default {
             axios
                 .post("/api/register-account", this.form)
                 .then(res => {
-                    console.log("saved");
+                    this.$router.push({ name: "login" });
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
