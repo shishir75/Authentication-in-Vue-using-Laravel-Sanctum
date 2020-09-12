@@ -53,9 +53,17 @@ export default {
                     .post("/api/login", this.form)
                     .then(res => {
                         this.$router.push({ name: "Dashboard" });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Login successful."
+                        });
                     })
                     .catch(error => {
                         this.errors = error.response.data.errors;
+                        Toast.fire({
+                            icon: "error",
+                            title: "Something went wrong, Try again!"
+                        });
                     });
             });
         }

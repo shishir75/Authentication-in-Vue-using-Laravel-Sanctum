@@ -76,9 +76,17 @@ export default {
                 .post("/api/register-account", this.form)
                 .then(res => {
                     this.$router.push({ name: "login" });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Registration successful. Login now!"
+                    });
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
+                    Toast.fire({
+                        icon: "error",
+                        title: "Something went wrong, Try again!"
+                    });
                 });
         }
     }

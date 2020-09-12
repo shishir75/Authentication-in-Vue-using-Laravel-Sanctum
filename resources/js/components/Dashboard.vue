@@ -25,9 +25,17 @@ export default {
                 .post("/api/logout")
                 .then(() => {
                     this.$router.push({ name: "Home" });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Logout successful. See you soon!"
+                    });
                 })
                 .catch(error => {
                     console.log(error);
+                    Toast.fire({
+                        icon: "error",
+                        title: "Something went wrong, Try again!"
+                    });
                 });
         }
     },
