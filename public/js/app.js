@@ -1927,13 +1927,48 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.withCredentials = true;
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000/";
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      user: null
+    };
+  },
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/logout").then(function () {
+        _this.$router.push({
+          name: "Home"
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/user").then(function (res) {
+      console.log(res.data);
+      _this2.user = res.data;
+    });
+  }
+});
 
 /***/ }),
 
@@ -2035,7 +2070,7 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
-      axios.post("/api/login-user", this.form).then(function (res) {
+      axios.post("/api/login", this.form).then(function (res) {
         _this.$router.push({
           name: "Dashboard"
         });
@@ -2112,11 +2147,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2134,7 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   computed: {},
   methods: {
-    safeForm: function safeForm() {
+    saveForm: function saveForm() {
       var _this = this;
 
       axios.post("/api/register-account", this.form).then(function (res) {
@@ -37761,16 +37791,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", [_vm._v("Dashboard Page")]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-warning",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.logout($event)
+          }
+        }
+      },
+      [_vm._v("Logout")]
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Dashboard Page")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37884,7 +37925,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "email", id: "email" },
+            attrs: { type: "text", id: "email" },
             domProps: { value: _vm.form.email },
             on: {
               input: function($event) {
@@ -38104,13 +38145,7 @@ var render = function() {
                 _vm.$set(_vm.form, "password_confirmation", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _vm.errors.password_confirmation
-            ? _c("small", { staticClass: "text-danger" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0]))
-              ])
-            : _vm._e()
+          })
         ]),
         _vm._v(" "),
         _c(
@@ -53888,7 +53923,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: "/dashboard",
     name: "Dashboard",
-    component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    beforeEnter: function beforeEnter(to, from, next) {
+      axios.get("/api/authenticated").then(function () {
+        next();
+      })["catch"](function () {
+        return next({
+          name: "login"
+        });
+      });
+    }
   }, {
     path: "*",
     name: "NotFound",

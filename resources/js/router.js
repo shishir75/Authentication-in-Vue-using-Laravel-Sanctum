@@ -20,7 +20,21 @@ const router = new VueRouter({
         { path: "/about", name: "About", component: About },
         { path: "/login", name: "login", component: login },
         { path: "/register", name: "register", component: register },
-        { path: "/dashboard", name: "Dashboard", component: Dashboard },
+        {
+            path: "/dashboard",
+            name: "Dashboard",
+            component: Dashboard,
+            beforeEnter: (to, from, next) => {
+                axios
+                    .get("/api/authenticated")
+                    .then(() => {
+                        next();
+                    })
+                    .catch(() => {
+                        return next({ name: "login" });
+                    });
+            }
+        },
         { path: "*", name: "NotFound", component: NotFound }
     ]
 });

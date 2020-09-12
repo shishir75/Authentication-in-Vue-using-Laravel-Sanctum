@@ -47,11 +47,6 @@
                     id="exampleInputPassword1"
                     v-model="form.password_confirmation"
                 />
-                <small
-                    v-if="errors.password_confirmation"
-                    class="text-danger"
-                    >{{ errors.password_confirmation[0] }}</small
-                >
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -76,7 +71,7 @@ export default {
     created() {},
     computed: {},
     methods: {
-        safeForm() {
+        saveForm() {
             axios
                 .post("/api/register-account", this.form)
                 .then(res => {

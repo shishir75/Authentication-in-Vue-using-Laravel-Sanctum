@@ -5,7 +5,7 @@
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input
-                    type="email"
+                    type="text"
                     class="form-control"
                     id="email"
                     v-model="form.email"
@@ -49,7 +49,7 @@ export default {
     methods: {
         login() {
             axios
-                .post("/api/login-user", this.form)
+                .post("/api/login", this.form)
                 .then(res => {
                     this.$router.push({ name: "Dashboard" });
                 })
