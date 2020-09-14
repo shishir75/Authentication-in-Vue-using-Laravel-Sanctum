@@ -52,7 +52,7 @@ export default {
                 axios
                     .post("/api/login", this.form)
                     .then(res => {
-                        this.$store.commit("setAuthUser", true);
+                        this.$store.commit("isLogIn", true);
                         this.$router.push({ name: "Dashboard" });
                         Toast.fire({
                             icon: "success",

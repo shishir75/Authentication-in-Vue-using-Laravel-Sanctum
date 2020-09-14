@@ -37,7 +37,7 @@ export default {
         return {};
     },
     created() {
-        this.$store.commit("setAuthUser", window.auth_user);
+        this.$store.commit("isLogIn", window.auth_user);
     },
     computed: {
         isLoggedIn() {
@@ -49,7 +49,7 @@ export default {
             axios
                 .post("/api/logout")
                 .then(() => {
-                    this.$store.commit("setAuthUser", null);
+                    this.$store.commit("isLogIn", null);
                     this.$router.push({ name: "Home" });
                     Toast.fire({
                         icon: "success",

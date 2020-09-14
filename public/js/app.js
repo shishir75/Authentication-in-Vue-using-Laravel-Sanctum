@@ -2023,7 +2023,7 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   created: function created() {
-    this.$store.commit("setAuthUser", window.auth_user);
+    this.$store.commit("isLogIn", window.auth_user);
   },
   computed: {
     isLoggedIn: function isLoggedIn() {
@@ -2035,7 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post("/api/logout").then(function () {
-        _this.$store.commit("setAuthUser", null);
+        _this.$store.commit("isLogIn", null);
 
         _this.$router.push({
           name: "Home"
@@ -2139,7 +2139,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/sanctum/csrf-cookie").then(function (response) {
         axios.post("/api/login", _this.form).then(function (res) {
-          _this.$store.commit("setAuthUser", true);
+          _this.$store.commit("isLogIn", true);
 
           _this.$router.push({
             name: "Dashboard"
@@ -58754,16 +58754,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    user: null
+    isLoggedIn: null
   },
   getters: {
     isLoggedIn: function isLoggedIn(state) {
-      return state.user !== null;
+      return state.isLoggedIn !== null;
     }
   },
   mutations: {
-    setAuthUser: function setAuthUser(state, payload) {
-      return state.user = payload;
+    isLogIn: function isLogIn(state, payload) {
+      return state.isLoggedIn = payload;
     }
   },
   actions: {}

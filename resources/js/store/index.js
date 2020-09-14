@@ -1,15 +1,15 @@
 export default {
     state: {
-        user: null
+        isLoggedIn: null
     },
     getters: {
         isLoggedIn(state) {
-            return state.user !== null;
+            return state.isLoggedIn !== null;
         }
     },
     mutations: {
-        setAuthUser(state, payload) {
-            return (state.user = payload);
+        isLogIn(state, payload) {
+            return (state.isLoggedIn = payload);
         }
     },
     actions: {}
