@@ -9,7 +9,7 @@ export default {
     },
     mutations: {
         isLogIn(state, payload) {
-            return (state.isLoggedIn = payload);
+            state.isLoggedIn = payload;
         }
     },
     actions: {}

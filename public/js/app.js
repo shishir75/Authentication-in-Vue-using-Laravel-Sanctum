@@ -58763,7 +58763,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mutations: {
     isLogIn: function isLogIn(state, payload) {
-      return state.isLoggedIn = payload;
+      state.isLoggedIn = payload;
     }
   },
   actions: {}
