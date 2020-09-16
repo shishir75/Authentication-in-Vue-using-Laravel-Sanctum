@@ -23,20 +23,21 @@ const router = new VueRouter({
         {
             path: "/dashboard",
             name: "Dashboard",
-            component: Dashboard,
-            beforeEnter: (to, from, next) => {
-                axios
-                    .get("/api/authenticated")
-                    .then(() => {
-                        next();
-                    })
-                    .catch(() => {
-                        return next({ name: "login" });
-                    });
-            }
+            component: Dashboard
         },
         { path: "*", name: "NotFound", component: NotFound }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    let isAuthenticated = window.auth_user ? true : false;
+    if (from.name === "Dashboard" || to.name === "Home") {
+        next();
+    } else if (to.name !== "login" && !isAuthenticated) {
+        if (from.name !== "login") {
+            next({ name: "login" });
+        } else next();
+    } else next();
 });
 
 export default router;

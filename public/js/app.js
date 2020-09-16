@@ -58723,21 +58723,25 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }, {
     path: "/dashboard",
     name: "Dashboard",
-    component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    beforeEnter: function beforeEnter(to, from, next) {
-      axios.get("/api/authenticated").then(function () {
-        next();
-      })["catch"](function () {
-        return next({
-          name: "login"
-        });
-      });
-    }
+    component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: "*",
     name: "NotFound",
     component: _components_NotFound_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }]
+});
+router.beforeEach(function (to, from, next) {
+  var isAuthenticated = window.auth_user ? true : false;
+
+  if (from.name === "Dashboard" || to.name === "Home") {
+    next();
+  } else if (to.name !== "login" && !isAuthenticated) {
+    if (from.name !== "login") {
+      next({
+        name: "login"
+      });
+    } else next();
+  } else next();
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
