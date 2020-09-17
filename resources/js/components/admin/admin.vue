@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Frontend Component</h1>
+        <h1>Admin Area</h1>
         <router-view></router-view>
     </div>
 </template>

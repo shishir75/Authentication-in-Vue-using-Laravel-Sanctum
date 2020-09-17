@@ -12,12 +12,12 @@
         <div v-else>
             <router-link
                 class="btn btn-dark px-3 my-3 float-right"
-                to="/register"
+                :to="{ name: 'Register' }"
                 >Register</router-link
             >
             <router-link
                 class="btn btn-dark px-3 my-3 float-right mr-3"
-                to="/login"
+                :to="{ name: 'Login' }"
                 >Login</router-link
             >
         </div>
@@ -50,6 +50,7 @@ export default {
                 .post("/api/logout")
                 .then(() => {
                     this.$store.commit("isLogIn", null);
+                    window.auth_user = null;
                     this.$router.push({ name: "Home" });
                     Toast.fire({
                         icon: "success",

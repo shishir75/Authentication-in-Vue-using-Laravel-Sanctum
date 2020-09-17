@@ -53,6 +53,7 @@ export default {
                     .post("/api/login", this.form)
                     .then(res => {
                         this.$store.commit("isLogIn", true);
+                        window.auth_user = true; // it is must for login.
                         this.$router.push({ name: "Dashboard" });
                         Toast.fire({
                             icon: "success",
